@@ -12,7 +12,7 @@
 */
 
 use App\Http\Controllers\wishController;
-
+use Illuminate\Support\Facades\Auth;
 
 
 Route::get('/', function () {
@@ -22,7 +22,11 @@ Route::get('/', function () {
 Route::get('/wishlist', 'wishController@index');
 
 Route::get('/editwishlist', function () {
-    return view('editWishlist');
+    if(Auth::check()) {
+        return view('editWishlist');
+    } else {
+        return redirect('login');
+    }
 });
 
 Auth::routes();

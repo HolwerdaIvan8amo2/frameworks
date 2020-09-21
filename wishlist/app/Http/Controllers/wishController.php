@@ -10,8 +10,12 @@ use Illuminate\Support\Facades\DB;
 class wishController extends Controller
 {
   public function index() {
-      $wishes = wish::all();
-      return view('/wishlist', ['wishes' => $wishes]);
+      if(Auth::check()) {
+          $wishes = wish::all();
+          return view('/wishlist', ['wishes' => $wishes]);
+      } else {
+          return redirect('login');
+      }
   }
 
   public function store(Request $request) {
@@ -47,8 +51,12 @@ class wishController extends Controller
 
 
   public function edit ($id) {
-      $wish = wish::find($id);
-      return view('/edit', ['wish' => $wish]);
+      if(Auth::check()) {
+          $wish = wish::find($id);
+          return view('/edit', ['wish' => $wish]);
+      } else {
+          return redirect('login');
+      }
   }
 
     public function update($id, Request $request) {
